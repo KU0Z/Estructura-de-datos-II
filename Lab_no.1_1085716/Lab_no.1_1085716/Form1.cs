@@ -16,5 +16,10 @@ namespace Lab_no._1_1085716
         {
             InitializeComponent();
         }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
