@@ -13,15 +13,51 @@ namespace Lab_no._1_1085716
     public partial class Form1 : Form
     {
         Dictionary<string, Cancion> bliblioteca = new Dictionary<string, Cancion>();
+        List<Cancion> mylista = new List<Cancion>();
+                        
         public Form1()
         {
             InitializeComponent();
+            DataGridViewButtonColumn buttonColumn =
+            new DataGridViewButtonColumn();
+            buttonColumn.HeaderText = "";
+            buttonColumn.Name = "Play";
+            buttonColumn.Text = "Play";
+            buttonColumn.Width = 40;
+            buttonColumn.UseColumnTextForButtonValue = true;
+            DataGridViewButtonColumn agregfarLista =
+            new DataGridViewButtonColumn();
+            agregfarLista.HeaderText = "";
+            agregfarLista.Name = "Agregar a lista";
+            agregfarLista.Text = "Agregar a lista";
+            agregfarLista.UseColumnTextForButtonValue = true;
+
+            dgvInfo.Columns.Add(buttonColumn);
             dgvInfo.Columns.Add("Titulo", "Titulo");
             dgvInfo.Columns.Add("Artista", "Artista");
             dgvInfo.Columns.Add("Album", "Album");
             dgvInfo.Columns.Add("Genero", "Genero");
             dgvInfo.Columns.Add("Año", "Año");
+            dgvInfo.Columns.Add(agregfarLista);
+
+            DataGridViewButtonColumn buttonColumn2 =
+            new DataGridViewButtonColumn();
+            buttonColumn2.HeaderText = "";
+            buttonColumn2.Name = "Play";
+            buttonColumn2.Text = "Play";
+            buttonColumn2.Width = 40;
+            buttonColumn2.UseColumnTextForButtonValue = true;
+
+            dgvLista.Columns.Add(buttonColumn2);
+            dgvLista.Columns.Add("Titulo", "Titulo");
+            dgvLista.Columns.Add("Artista", "Artista");
+            dgvLista.Columns.Add("Album", "Album");
+            dgvLista.Columns.Add("Genero", "Genero");
+            dgvLista.Columns.Add("Año", "Año");
+
+
         }
+       
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
@@ -50,8 +86,18 @@ namespace Lab_no._1_1085716
                     cancion.Genero = file.Tag.FirstGenre;
                     cancion.año = Convert.ToInt32(file.Tag.Year);
                     cancion.ruta = name[i];
-                    bliblioteca.Add(cancion.nombre, cancion);
-                    dgvInfo.Rows.Add(cancion.nombre,cancion.Artista,cancion.Album,cancion.Genero,cancion.año);
+                    try
+                    {
+                        bliblioteca.Add(cancion.nombre, cancion);
+                        dgvInfo.Rows.Add("", cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
+                    }
+                    catch (Exception )
+                    {
+
+                        MessageBox.Show("EL archvio no contenia todos los parametros");
+                    }
+                    
+                    
                    
                 }
                
@@ -137,7 +183,7 @@ namespace Lab_no._1_1085716
                 foreach (KeyValuePair<string, Cancion> pair in items)
                 {
                     Cancion cancion = pair.Value;
-                    dgvInfo.Rows.Add(cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
+                    dgvInfo.Rows.Add("", cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
                     
 
                 }
@@ -161,7 +207,7 @@ namespace Lab_no._1_1085716
                     dgvInfo.Rows.Clear();
 
                     Cancion cancion = bliblioteca[textBox1.Text];
-                    dgvInfo.Rows.Add(cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
+                    dgvInfo.Rows.Add("", cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
                 }
                 else
                 {
@@ -177,6 +223,32 @@ namespace Lab_no._1_1085716
             }
             
             
+        }
+
+        private void dgvInfo_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (dgvInfo.CurrentCell.ColumnIndex)
+            {
+
+                case 0:
+                    {
+
+
+                        break;
+                    }
+
+                case 6:
+                    {
+                        int pocision = dgvInfo.CurrentCell.RowIndex;
+                        string dreccion = dgvInfo.Rows[pocision].Cells[1].Value.ToString();
+                        Cancion cancion = bliblioteca[dreccion];
+                        mylista.Add(cancion);
+                        dgvLista.Rows.Add("", cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
+                        MessageBox.Show("Se agrego una cancion a la lista");
+
+                        break;
+                    }
+            }
         }
     }
 }
