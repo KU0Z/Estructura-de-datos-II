@@ -18,4 +18,25 @@ namespace Lab_no._1_1085716
 
 
     }
+    class MyComparer : IComparer<Cancion>
+
+    {
+
+        #region IComparer Members
+
+        public int Compare(Cancion x, Cancion y)
+
+        {
+
+            return (new System.Collections.CaseInsensitiveComparer().Compare(x.nombre, y.nombre));
+
+        }
+
+        #endregion
+
+    }
 }
+
+
+
+ 

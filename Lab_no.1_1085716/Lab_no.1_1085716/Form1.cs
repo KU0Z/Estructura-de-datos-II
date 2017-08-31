@@ -39,10 +39,11 @@ namespace Lab_no._1_1085716
                 string[] name = ofd.FileNames;
                 string[] path = ofd.SafeFileNames;
 
-                Cancion cancion = new Cancion();
+                
                 for (int i = 0; i < name.Length-1; i++)
                 {
                     TagLib.File file = TagLib.File.Create(name[i]);
+                    Cancion cancion = new Cancion();
                     cancion.nombre = file.Tag.Title;
                     cancion.Artista = file.Tag.FirstArtist;
                     cancion.Album = file.Tag.Album;
@@ -55,6 +56,127 @@ namespace Lab_no._1_1085716
                 }
                
             }
+        }
+
+        private void btnOrdenar_Click(object sender, EventArgs e)
+        { 
+            
+            try
+            {
+                IOrderedEnumerable<KeyValuePair<string, Cancion>> items=null;
+                if (cbxTipoOrdenar.Text== "Ascendentes")
+                {
+                    if (cbxOrdenarpor.Text == "Titulo")
+                    {
+                         items = from pair in bliblioteca
+                                    orderby pair.Value.nombre ascending
+                                    select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Artista")
+                    {
+                         items = from pair in bliblioteca
+                                    orderby pair.Value.Artista ascending
+                                    select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Album")
+                    {
+                         items = from pair in bliblioteca
+                                    orderby pair.Value.Album ascending
+                                    select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Genero")
+                    {
+                         items = from pair in bliblioteca
+                                    orderby pair.Value.Genero ascending
+                                    select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Año")
+                    {
+                        items = from pair in bliblioteca
+                                    orderby pair.Value.año ascending
+                                    select pair;
+                    }
+
+                }
+                else if(cbxTipoOrdenar.Text == "Descendentes")
+                {
+                    if (cbxOrdenarpor.Text == "Titulo")
+                    {
+                        items = from pair in bliblioteca
+                                    orderby pair.Value.nombre descending
+                                    select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Artista")
+                    {
+                        items = from pair in bliblioteca
+                                    orderby pair.Value.Artista descending
+                                select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Album")
+                    {
+                        items = from pair in bliblioteca
+                                    orderby pair.Value.Album descending
+                                select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Genero")
+                    {
+                         items = from pair in bliblioteca
+                                    orderby pair.Value.Genero descending
+                                 select pair;
+                    }
+                    else if (cbxOrdenarpor.Text == "Año")
+                    {
+                         items = from pair in bliblioteca
+                                    orderby pair.Value.año descending
+                                 select pair;
+                    }
+                }
+
+                dgvInfo.Rows.Clear();
+                // Display results.
+                foreach (KeyValuePair<string, Cancion> pair in items)
+                {
+                    Cancion cancion = pair.Value;
+                    dgvInfo.Rows.Add(cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
+                    
+
+                }
+            }
+            catch
+            {
+                MessageBox.Show("No escogio tipo Ordenamiento");
+            }
+           
+
+           
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (bliblioteca.ContainsKey(textBox1.Text) == true)
+                {
+                    dgvInfo.Rows.Clear();
+
+                    Cancion cancion = bliblioteca[textBox1.Text];
+                    dgvInfo.Rows.Add(cancion.nombre, cancion.Artista, cancion.Album, cancion.Genero, cancion.año);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontro");
+                }
+
+            }
+            catch (Exception)
+            {
+
+
+                MessageBox.Show("Error");
+            }
+            
+            
         }
     }
 }
