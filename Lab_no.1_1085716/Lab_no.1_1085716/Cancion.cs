@@ -8,8 +8,14 @@ namespace Lab_no._1_1085716
 {
     class Cancion
     {
-        private string nombre { get; set; }
+        public string nombre { get; set; }
 
-        private string ruta { get; set; }
+        public string ruta { get; set; }
+        public string Artista { get; set; }
+        public string Album { get; set; }
+        public string Genero { get; set; }
+        public int año { get; set; }
+
+
     }
 }
