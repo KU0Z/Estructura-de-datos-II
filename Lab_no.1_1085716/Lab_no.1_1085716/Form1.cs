@@ -232,7 +232,11 @@ namespace Lab_no._1_1085716
 
                 case 0:
                     {
-
+                        int pocision = dgvInfo.CurrentCell.RowIndex;
+                        string dreccion = dgvInfo.Rows[pocision].Cells[1].Value.ToString();
+                        Cancion cancion = bliblioteca[dreccion];
+                        axWindowsMediaPlayer1.URL = cancion.ruta;
+                        axWindowsMediaPlayer1.Ctlcontrols.play();
 
                         break;
                     }
